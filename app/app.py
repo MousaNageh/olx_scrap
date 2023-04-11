@@ -1,20 +1,21 @@
 from flask import Flask, jsonify
-from pymongo import MongoClient
-
+from db.db_connection import DatabaseConnection
+from driver.chrome_diver import ChromeDriver
+from olx_email.olx_ads_email import EmailSender
+from scraping.olx_scraping import OlxScraping
 app = Flask(__name__)
-
-def get_db():
-    client = MongoClient(host='db',
-                         port=27017,
-                         username='root',
-                         password='pass',
-                        authSource="admin")
-    db = client["animal_db"]
-    return db
+app.config.from_pyfile('config.py')
+db = DatabaseConnection()
+driver = ChromeDriver().get_driver()
 
 @app.route('/')
-def ping_server():
-    return "Welcome to the world of animals."
+def get_olx_data():
+    olx_scraping = OlxScraping(driver=driver)
+    data = olx_scraping.get_data(keyword='s')
+
+    email = EmailSender(recipient="200moussa200@gmail.com",app=app)
+    email.send_email(data=data[:20])
+    return "olx up"
 
 # @app.route('/animals')
 # def get_stored_animals():

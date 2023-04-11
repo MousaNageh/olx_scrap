@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   olx_scrap:
+    restart: always
     build: .
     container_name: olx_scrap
     command: python -u app.py
@@ -10,14 +11,14 @@ services:
       - "5000:5000"
     volumes:
       - .:/app
+    env_file:
+      - env/.env.local
     links:
       - db
   db:
     image: mongo:4.4.20-rc0-focal
-    environment:
-      - MONGO_INITDB_DATABASE=olx_db
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=pass
+    env_file:
+      - env/.env.local
     volumes:
       - ./db_backup:/data/db/
     ports:

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Olx Ads</title>
+    <style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		th, td {
+			text-align: center;
+			padding: 8px;
+			border: 1px solid #ddd;
+			width: 14.28%;
+		}
+		th {
+			background-color: #f2f2f2;
+		}
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+	</style>
+</head>
+<body>
+	<h2>Olx ads</h2>
+	<table>
+        <tr>
+			<th>Imag</th>
+			<th>Title</th>
+            <th>Price</th>
+            <th>Currency</th>
+            <th>Location</th>
+            <th>created At</th>
+            <th>Negotiable</th>
+		</tr>
+		{% for item in data %}
+		<tr>
+			<td><img src="{{ item['image'] }}" alt="{{ item['title'] }}" style="max-width: 300px;"></td>
+			<td><h4>{{ item['title'] }}</h4></td>
+            <td><h4>{{ item['price'] }}</h4></td>
+            <td><h4>{{ item['currency'] }}</h4></td>
+            <td><h4>{{ item['location'] }}</h4></td>
+            <td><h4>{{ item['created_at'] }}</h4></td>
+            <td><h4>{{ item['negotiable'] }}</h4></td>
+		</tr>
+		{% endfor %}
+	</table>
+</body>
+</html>
