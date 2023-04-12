@@ -1,4 +1,4 @@
-# olx_scrap
+# olx scraping
 
 ### the app used for scraping Ads from olx ,save the data in to mongodb and send email of sample of data .
 
