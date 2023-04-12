@@ -12,7 +12,6 @@ driver = ChromeDriver().get_driver()
 def get_olx_data():
     olx_scraping = OlxScraping(driver=driver)
     data = olx_scraping.get_data(keyword='s')
-
     email = EmailSender(recipient="200moussa200@gmail.com",app=app)
     email.send_email(data=data[:20])
     return "olx up"
