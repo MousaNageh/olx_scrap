@@ -36,7 +36,7 @@ class OlxScraping(ScrapingAbstract):
         page = 1
         data=[]
         url = self._handle_url(keyword)
-        while len(data) < 10:
+        while len(data) < 300:
             url_paginate = url if page == 1 else f"{url}?page={page}"
             if self._send_request(url_paginate) == url_paginate:
                 lis = self.driver.find_elements(By.XPATH, "//li[@aria-label='Listing']")

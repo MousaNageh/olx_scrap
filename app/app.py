@@ -1,27 +1,32 @@
 from flask import Flask, jsonify
 from db.db_connection import DatabaseConnection
 from driver.chrome_diver import ChromeDriver
-from olx_email.olx_ads_email import EmailSender
-from scraping.olx_scraping import OlxScraping
+from scraping_executor.olx_scraping_executor import olx_scraping_executor
+from validations.validate_olx_request import validate_olx_request
+from flask import request
+import multiprocessing
+
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
-db = DatabaseConnection()
+db = DatabaseConnection().get_db()
 driver = ChromeDriver().get_driver()
 
-@app.route('/')
+@app.route('/',methods=['POST'])
 def get_olx_data():
-    olx_scraping = OlxScraping(driver=driver)
-    data = olx_scraping.get_data(keyword='s')
-    email = EmailSender(recipient="200moussa200@gmail.com",app=app)
-    email.send_email(data=data[:20])
-    return "olx up"
+    errors,valid_data = validate_olx_request(request)
+    if errors :
+        return jsonify({'errors': errors}), 400
+    args = (
+        valid_data,
+        db,
+        driver,
+        app
+    )
+    process = multiprocessing.Process(target=olx_scraping_executor,args=args)
+    process.start()
 
-# @app.route('/animals')
-# def get_stored_animals():
-#     db = get_db()
-#     _animals = db.animal_tb.find()
-#     animals = [{"id": animal["id"], "name": animal["name"], "type": animal["type"]} for animal in _animals]
-#     return jsonify({"animals": animals})
+    return jsonify({'success':"email will send after awhile"}), 200
+
 
 if __name__=='__main__':
     app.run(host="0.0.0.0", port=5000)

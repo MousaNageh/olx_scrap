@@ -4,7 +4,7 @@ import os
 
 
 class DatabaseConnection(DatabaseConnectionAbstract):
-    def get_db(self):
+    def get_db(self) :
         client = MongoClient(host=os.environ.get('DATABASE_HOST'),
                              port=int(os.environ.get('DATABASE_PORT')),
                              username=os.environ.get('MONGO_INITDB_ROOT_USERNAME'),
