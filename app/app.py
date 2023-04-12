@@ -25,7 +25,7 @@ def get_olx_data():
     process = multiprocessing.Process(target=olx_scraping_executor,args=args)
     process.start()
 
-    return jsonify({'success':"email will send after awhile"}), 200
+    return jsonify({'success':"email will sent after awhile"}), 200
 
 
 if __name__=='__main__':
