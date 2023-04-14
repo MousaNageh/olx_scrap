@@ -10,7 +10,7 @@ def send_email(data,email,app):
 
 def olx_scraping_executor(valid_data,db,driver,app):
     olx_collection = OlxCollections(db=db)
-    document = olx_collection.get_if_exists_create(keyword=valid_data.get('keyword'))
+    document = olx_collection.get_if_exists(keyword=valid_data.get('keyword'))
     if not  document:
         olx_scraping = OlxScraping(driver=driver)
         data = olx_scraping.get_data(keyword=valid_data.get('keyword'))

@@ -11,7 +11,7 @@ class DatabaseConnectionAbstract(ABC):
 
 
     @abstractmethod
-    def get_if_exists_create(self,keyword:str):
+    def get_if_exists(self,keyword:str):
         pass
 
     @abstractmethod
