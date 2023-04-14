@@ -11,14 +11,12 @@ class OlxCollections(DatabaseConnectionAbstract):
 
     def get_if_exists(self,keyword:str):
         today = str(date.today())
-        query =self.collection.find_one({"keyword":keyword,"date":today})
-        return query
+        return self.collection.find_one({"keyword":keyword,"date":today})
 
     def create_doc(self, keyword: str, data):
         today = str(date.today())
         query = self.collection.insert_one({"keyword":keyword,"date":today,"data":data})
-        result = self.collection.find_one({"_id": query.inserted_id})
-        return  result
+        return  self.collection.find_one({"_id": query.inserted_id})
 
 
 
