@@ -12,8 +12,6 @@ class OlxCollections(DatabaseConnectionAbstract):
     def get_if_exists(self,keyword:str):
         today = str(date.today())
         query =self.collection.find_one({"keyword":keyword,"date":today})
-        # if not query:
-        #     query = self.collection.insert_one({"keyword":keyword,"date":today,"data":[]})
         return query
 
     def create_doc(self, keyword: str, data):
